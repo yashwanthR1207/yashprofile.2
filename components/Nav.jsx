@@ -40,14 +40,14 @@ const Nav = () => {
               role="tooltip"
               className="absolute pr-14 right-0 hidden xl:group-hover:flex"
             >
-              <div className="bg-ink relative flex text-white items-center p-[6px] rounded-[3px]">
+              <div className="bg-[#e2e8f0] relative flex text-ink items-center p-[6px] rounded-[3px]">
                 <div className="text-[12px] leading-none font-semibold capitalize">
                   {link.name}
                 </div>
 
                 {/* triangle */}
                 <div
-                  className="border-solid border-l-ink border-l-8 border-y-transparent border-y-[6px] border-r-0 absolute -right-2"
+                  className="border-solid border-l-[#e2e8f0] border-l-8 border-y-transparent border-y-[6px] border-r-0 absolute -right-2"
                   aria-hidden
                 />
               </div>

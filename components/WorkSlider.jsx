@@ -57,7 +57,7 @@ const WorkSlider = () => {
                 />
 
                 {/* Title */}
-                <h3 className="text-sm sm:text-xl md:text-2xl font-bold text-center z-10 group-hover:text-white group-hover:-translate-y-4 sm:group-hover:-translate-y-6 transition-all duration-300 px-4">
+                <h3 className="text-sm sm:text-xl md:text-2xl font-bold text-center z-10 group-hover:text-ink group-hover:-translate-y-4 sm:group-hover:-translate-y-6 transition-all duration-300 px-4">
                   {image.title}
                 </h3>
 
@@ -67,7 +67,7 @@ const WorkSlider = () => {
                     href={image.link}
                     target="_blank"
                     rel="noreferrer noopener"
-                    className="flex items-center gap-x-2 text-[10px] sm:text-[13px] tracking-[0.2em] uppercase group-hover:text-white"
+                    className="flex items-center gap-x-2 text-[10px] sm:text-[13px] tracking-[0.2em] uppercase group-hover:text-ink"
                   >
                     <div className="delay-100">VIEW</div>
                     <div className="translate-y-[500%] group-hover:translate-y-0 transition-all duration-300 delay-150">
