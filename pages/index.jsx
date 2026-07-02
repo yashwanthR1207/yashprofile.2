@@ -11,7 +11,8 @@ const Home = () => {
     <div className="bg-primary/60 h-full">
       {/* text */}
       <div className="w-full h-full">
-        <div className="text-center flex flex-col justify-center xl:pt-40 xl:text-left h-full container mx-auto">
+        <div className="text-center flex flex-col justify-center xl:pt-40 xl:text-left h-full container mx-auto xl:items-end">
+          <div className="flex flex-col items-center xl:items-start relative z-20">
           {/* title */}
           <motion.h1
             variants={fadeIn("down", 0.2)}
@@ -50,10 +51,11 @@ const Home = () => {
           >
             <ProjectsBtn />
           </motion.div>
+          </div>
         </div>
       </div>
       {/* image */}
-      <div className="w-[1280px] h-full absolute right-0 bottom-0">
+      <div className="w-[1280px] h-full absolute left-0 bottom-0 pointer-events-none">
         {/* bg img */}
         <div
           role="img"
@@ -71,7 +73,7 @@ const Home = () => {
           animate="show"
           exit="hidden"
           transition={{ duration: 1, ease: "easeInOut" }}
-          className="w-full h-full max-w-[700px] max-h-[700px] absolute -bottom-32 lg:bottom-0 lg:right-[8%]"
+          className="w-full h-full max-w-[700px] max-h-[700px] absolute -bottom-32 lg:bottom-0 lg:left-[8%]"
         >
           <Avatar />
         </motion.div>
