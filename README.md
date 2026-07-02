@@ -66,8 +66,6 @@ modern-portfolio/
   |- pages/
     |-- about/
     |-- contact/
-    |-- services/
-    |-- testimonials/
     |-- work/
     |-- _app.jsx
     |-- index.jsx
