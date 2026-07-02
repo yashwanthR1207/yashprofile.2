@@ -19,16 +19,16 @@ const Layout = ({ children }) => {
     >
       {/* metadata */}
       <Head>
-        <title>Ethan Smith | Portfolio</title>
+        <title>Yashwanth | Portfolio</title>
         <meta
           name="description"
-          content="Ethan Smith is a Full-stack web developer with 10+ years of experience."
+          content="Yashwanth is a passionate developer."
         />
         <meta
           name="keywords"
-          content="react, next, nextjs, html, css, javascript, js, modern-ui, modern-ux, portfolio, framer-motion, 3d-website, particle-effect"
+          content="react, next, nextjs, html, css, javascript, js, modern-ui, modern-ux, portfolio, framer-motion, 3d-website, particle-effect, iot, developer"
         />
-        <meta name="author" content="Sanidhya Kumar Verma" />
+        <meta name="author" content="Yashwanth" />
         <meta name="theme-color" content="#f13024" />
       </Head>
 
