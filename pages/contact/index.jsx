@@ -56,27 +56,27 @@ const Contact = () => {
             >
               <Link 
                 href="mailto:yashwanth.1207.r@gmail.com" 
-                className="flex items-center gap-x-6 bg-accent/10 hover:bg-accent hover:text-white hover:shadow-lg hover:shadow-accent/40 text-black px-6 py-4 rounded-2xl transition-all duration-300 group"
+                className="flex items-center gap-x-6 bg-slate-100 hover:bg-[#EA4335] hover:text-white hover:shadow-lg hover:shadow-[#EA4335]/40 text-black px-6 py-4 rounded-2xl transition-all duration-300 group"
               >
-                <FaEnvelope className="text-accent group-hover:text-white text-2xl transition-colors duration-300" />
+                <FaEnvelope className="text-[#EA4335] group-hover:text-white text-2xl transition-colors duration-300" />
                 <span className="font-bold text-[17px]">yashwanth.1207.r@gmail.com</span>
               </Link>
               
               <Link 
                 href="https://www.linkedin.com/in/yashwanth-r-7855a7395" 
                 target="_blank"
-                className="flex items-center gap-x-6 bg-accent/10 hover:bg-accent hover:text-white hover:shadow-lg hover:shadow-accent/40 text-black px-6 py-4 rounded-2xl transition-all duration-300 group"
+                className="flex items-center gap-x-6 bg-slate-100 hover:bg-[#0077b5] hover:text-white hover:shadow-lg hover:shadow-[#0077b5]/40 text-black px-6 py-4 rounded-2xl transition-all duration-300 group"
               >
-                <FaLinkedin className="text-accent group-hover:text-white text-2xl transition-colors duration-300" />
+                <FaLinkedin className="text-[#0077b5] group-hover:text-white text-2xl transition-colors duration-300" />
                 <span className="font-bold text-[17px]">LinkedIn</span>
               </Link>
 
               <Link 
                 href="https://github.com/yashwanthR1207" 
                 target="_blank"
-                className="flex items-center gap-x-6 bg-accent/10 hover:bg-accent hover:text-white hover:shadow-lg hover:shadow-accent/40 text-black px-6 py-4 rounded-2xl transition-all duration-300 group"
+                className="flex items-center gap-x-6 bg-slate-100 hover:bg-[#181717] hover:text-white hover:shadow-lg hover:shadow-black/40 text-black px-6 py-4 rounded-2xl transition-all duration-300 group"
               >
-                <FaGithub className="text-accent group-hover:text-white text-2xl transition-colors duration-300" />
+                <FaGithub className="text-[#181717] group-hover:text-white text-2xl transition-colors duration-300" />
                 <span className="font-bold text-[17px]">GitHub</span>
               </Link>
             </motion.div>
