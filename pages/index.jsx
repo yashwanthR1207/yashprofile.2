@@ -21,7 +21,7 @@ const Home = () => {
             className="h1"
           >
             Hello, I&apos;m <br />{" "}
-            <span className="text-accent">Yashwanth R</span>
+            <span className="text-ink font-bold">Yashwanth R</span>
           </motion.h1>
 
           {/* subtitle */}
