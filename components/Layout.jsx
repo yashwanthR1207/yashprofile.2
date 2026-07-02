@@ -15,7 +15,7 @@ const sora = Sora({
 const Layout = ({ children }) => {
   return (
     <main
-      className={`page bg-site text-white bg-cover bg-no-repeat ${sora.variable} font-sora relative`}
+      className={`page bg-primary text-ink bg-cover bg-no-repeat ${sora.variable} font-sora relative`}
     >
       {/* metadata */}
       <Head>

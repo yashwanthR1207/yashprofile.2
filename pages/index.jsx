@@ -55,7 +55,7 @@ const Home = () => {
         {/* bg img */}
         <div
           role="img"
-          className="bg-none xl:bg-explosion xl:bg-cover xl:bg-right xl:bg-no-repeat w-full h-full absolute mix-blend-color-dodge translate-z-0"
+          className="bg-none xl:bg-cover xl:bg-right xl:bg-no-repeat w-full h-full absolute translate-z-0"
           aria-hidden
         />
 

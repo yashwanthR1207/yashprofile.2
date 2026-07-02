@@ -105,7 +105,7 @@ const About = () => {
           >
             <div className="flex flex-1 xl:gap-x-6">
               {/* cgpa */}
-              <div className="relative flex-1 after:w-[1px] after:h-full after:bg-white/10 after:absolute after:top-0 after:right-0">
+              <div className="relative flex-1 after:w-[1px] after:h-full after:bg-black/10 after:absolute after:top-0 after:right-0">
                 <div className="text-2xl xl:text-4xl font-extrabold text-accent mb-2">
                   <CountUp start={0} end={8} duration={5} />
                 </div>
@@ -115,7 +115,7 @@ const About = () => {
               </div>
 
               {/* projects */}
-              <div className="relative flex-1 after:w-[1px] after:h-full after:bg-white/10 after:absolute after:top-0 after:right-0">
+              <div className="relative flex-1 after:w-[1px] after:h-full after:bg-black/10 after:absolute after:top-0 after:right-0">
                 <div className="text-2xl xl:text-4xl font-extrabold text-accent mb-2">
                   <CountUp start={0} end={10} duration={5} />+
                 </div>
@@ -125,7 +125,7 @@ const About = () => {
               </div>
 
               {/* certifications */}
-              <div className="relative flex-1 after:w-[1px] after:h-full after:bg-white/10 after:absolute after:top-0 after:right-0">
+              <div className="relative flex-1 after:w-[1px] after:h-full after:bg-black/10 after:absolute after:top-0 after:right-0">
                 <div className="text-2xl xl:text-4xl font-extrabold text-accent mb-2">
                   <CountUp start={0} end={10} duration={5} />+
                 </div>
@@ -162,7 +162,7 @@ const About = () => {
                 className={`${
                   index === itemI &&
                   "text-accent after:w-[100%] after:bg-accent after:transition-all after:duration-300"
-                } cursor-pointer capitalize xl:text-lg relative after:w-8 after:h-[2px] after:bg-white after:absolute after:-bottom-1 after:left-0`}
+                } cursor-pointer capitalize xl:text-lg relative after:w-8 after:h-[2px] after:bg-ink/20 after:absolute after:-bottom-1 after:left-0`}
                 onClick={() => setIndex(itemI)}
               >
                 {item.title}
@@ -174,7 +174,7 @@ const About = () => {
             {aboutData[index].info.map((item, itemI) => (
               <div
                 key={itemI}
-                className="flex-1 flex flex-col md:flex-row max-w-max gap-x-2 items-center text-center text-white/60"
+                className="flex-1 flex flex-col md:flex-row max-w-max gap-x-2 items-center text-center text-muted"
               >
                 {/* title */}
                 <div className="font-light mb-2 md:mb-0">{item.title}</div>
@@ -184,7 +184,7 @@ const About = () => {
                 <div className="flex gap-x-4">
                   {/* icons */}
                   {item.icons?.map((Icon, iconI) => (
-                    <div key={iconI} className="text-2xl text-white">
+                    <div key={iconI} className="text-2xl text-ink">
                       <Icon />
                     </div>
                   ))}
