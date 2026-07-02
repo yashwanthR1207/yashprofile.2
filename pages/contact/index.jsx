@@ -14,7 +14,7 @@ const Contact = () => {
     const myForm = event.target;
     const formData = new FormData(myForm);
 
-    fetch("/__forms.html", {
+    fetch("/api/contact", {
       method: "POST",
       headers: { "Content-Type": "application/x-www-form-urlencoded" },
       body: new URLSearchParams(formData).toString(),
