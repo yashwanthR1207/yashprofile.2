@@ -20,7 +20,7 @@ const Home = () => {
             exit="hidden"
             className="h1"
           >
-            Hello, I'm <br />{" "}
+            Hello, I&apos;m <br />{" "}
             <span className="text-accent">Yashwanth R</span>
           </motion.h1>
 
