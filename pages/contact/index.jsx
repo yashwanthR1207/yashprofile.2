@@ -7,8 +7,8 @@ import { fadeIn } from "../../variants";
 
 const Contact = () => {
   return (
-    <div className="h-full bg-primary/30 flex items-center justify-center py-32 overflow-hidden">
-      <div className="container mx-auto flex justify-center h-full items-center">
+    <div className="h-full bg-primary/30 flex items-center justify-center py-24 pb-32 md:py-32 overflow-y-auto overflow-x-hidden xl:overflow-hidden">
+      <div className="container mx-auto flex justify-center h-full items-center px-4 sm:px-10 md:px-0">
         
         {/* Business Card */}
         <motion.div

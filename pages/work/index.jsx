@@ -8,7 +8,7 @@ import { fadeIn } from "../../variants";
 
 const Work = () => {
   return (
-    <div className="h-full bg-primary/30 py-36 flex items-center relative overflow-hidden">
+    <div className="h-full bg-primary/30 pt-24 pb-32 md:py-36 flex items-center relative overflow-y-auto overflow-x-hidden xl:overflow-hidden">
       <Circles />
       {/* Corner Profile Cat */}
       <motion.div
@@ -20,7 +20,7 @@ const Work = () => {
           damping: 20,
           delay: 0.8,
         }}
-        className="absolute -bottom-4 -left-4 md:bottom-10 md:left-10 w-[150px] h-[150px] md:w-[220px] md:h-[220px] rounded-full border-4 border-accent/50 bg-accent/10 overflow-hidden shadow-2xl z-20"
+        className="absolute -bottom-4 -left-4 md:bottom-10 md:left-10 w-[100px] h-[100px] md:w-[220px] md:h-[220px] rounded-full border-4 border-accent/50 bg-accent/10 overflow-hidden shadow-2xl z-20"
       >
         <Image 
           src="/work-cat.png"

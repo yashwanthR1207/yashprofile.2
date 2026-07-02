@@ -11,7 +11,7 @@ const Home = () => {
     <div className="bg-primary/60 h-full">
       {/* text */}
       <div className="w-full h-full">
-        <div className="text-center flex flex-col justify-center xl:pt-40 xl:text-left h-full container mx-auto xl:items-end">
+        <div className="text-center flex flex-col justify-center pt-24 pb-28 md:pt-32 md:pb-32 xl:pt-40 xl:pb-0 xl:text-left h-full container mx-auto xl:items-end">
           <div className="flex flex-col items-center xl:items-start relative z-20">
           {/* title */}
           <motion.h1
@@ -73,7 +73,7 @@ const Home = () => {
           animate="show"
           exit="hidden"
           transition={{ duration: 1, ease: "easeInOut" }}
-          className="w-full h-full max-w-[700px] max-h-[700px] absolute -bottom-32 lg:bottom-0 lg:left-[8%]"
+          className="w-full h-full max-w-[700px] max-h-[700px] absolute -bottom-24 md:-bottom-32 lg:bottom-0 lg:left-[8%]"
         >
           <Avatar />
         </motion.div>
