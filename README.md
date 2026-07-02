@@ -65,6 +65,7 @@ modern-portfolio/
     |-- WorkSlider.jsx
   |- pages/
     |-- about/
+    |-- api/
     |-- contact/
     |-- work/
     |-- _app.jsx
