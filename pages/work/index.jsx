@@ -8,8 +8,27 @@ import { fadeIn } from "../../variants";
 
 const Work = () => {
   return (
-    <div className="h-full bg-primary/30 py-36 flex items-center">
+    <div className="h-full bg-primary/30 py-36 flex items-center relative overflow-hidden">
       <Circles />
+      {/* Corner Profile Cat */}
+      <motion.div
+        initial={{ y: 150, scale: 0.5, opacity: 0 }}
+        animate={{ y: 0, scale: 1, opacity: 1 }}
+        transition={{
+          type: "spring",
+          stiffness: 150,
+          damping: 20,
+          delay: 0.8,
+        }}
+        className="absolute -bottom-4 -left-4 md:bottom-10 md:left-10 w-[150px] h-[150px] md:w-[220px] md:h-[220px] rounded-full border-4 border-accent/50 bg-accent/10 overflow-hidden shadow-2xl z-20"
+      >
+        <Image 
+          src="/work-cat.png"
+          alt="Cat working"
+          fill
+          className="object-cover"
+        />
+      </motion.div>
       <div className="container mx-auto">
         <div className="flex flex-col xl:flex-row gap-x-8">
           {/* text */}
@@ -32,25 +51,6 @@ const Work = () => {
             >
               Innovating through practical hardware solutions and intelligent software design.
             </motion.p>
-            {/* Pop-up Image */}
-            <motion.div
-              initial={{ scale: 0, opacity: 0, y: 50 }}
-              animate={{ scale: 1, opacity: 1, y: 0 }}
-              transition={{
-                type: "spring",
-                stiffness: 200,
-                damping: 15,
-                delay: 0.8,
-              }}
-              className="mt-6 relative w-full h-[250px] xl:h-[300px] hidden md:block"
-            >
-              <Image 
-                src="/work-cat.png"
-                alt="Cat working"
-                fill
-                className="object-contain object-left"
-              />
-            </motion.div>
           </div>
 
           {/* slider */}
