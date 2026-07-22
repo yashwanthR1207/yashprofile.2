@@ -1,4 +1,5 @@
 import { motion } from "framer-motion";
+import Image from "next/image";
 
 import ParticlesContainer from "../components/ParticlesContainer";
 import Avatar from "../components/Avatar";
@@ -12,6 +13,25 @@ const Home = () => {
       <div className="w-full h-full">
         <div className="text-center flex flex-col justify-center pt-20 pb-28 sm:pt-24 sm:pb-28 md:pt-32 md:pb-32 xl:pt-40 xl:pb-0 xl:text-left h-full container mx-auto xl:items-end px-4 sm:px-6">
           <div className="flex flex-col items-center xl:items-start relative z-20">
+
+          {/* Mobile avatar - visible only below xl */}
+          <motion.div
+            variants={fadeIn("down", 0.15)}
+            initial="hidden"
+            animate="show"
+            exit="hidden"
+            className="xl:hidden w-[120px] h-[120px] sm:w-[150px] sm:h-[150px] rounded-full overflow-hidden border-4 border-white shadow-lg mb-6 relative"
+          >
+            <Image
+              src="/avatar_new.png"
+              alt="Yashwanth R"
+              fill
+              sizes="150px"
+              className="object-cover object-top"
+              priority
+            />
+          </motion.div>
+
           {/* title */}
           <motion.h1
             variants={fadeIn("down", 0.2)}
@@ -37,7 +57,6 @@ const Home = () => {
             Building embedded systems and smart IoT solutions with bold design and real-world impact. Currently pursuing my B.E. at VVCE, Mysuru.
           </motion.p>
 
-
           </div>
         </div>
       </div>
@@ -53,7 +72,7 @@ const Home = () => {
         {/* particles */}
         <ParticlesContainer />
 
-        {/* avatar */}
+        {/* avatar - desktop only */}
         <motion.div
           variants={fadeIn("up", 0.5)}
           initial="hidden"

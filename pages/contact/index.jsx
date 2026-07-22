@@ -21,14 +21,14 @@ const Contact = () => {
           {/* Avatar Section */}
           <motion.div 
             whileHover={{ scale: 1.02 }}
-            className="w-full md:w-[320px] h-[220px] sm:h-[280px] md:h-auto relative rounded-2xl sm:rounded-3xl overflow-hidden shrink-0 border-4 border-white shadow-xl bg-gradient-to-b from-accent/20 to-transparent"
+            className="w-full md:w-[320px] h-[250px] sm:h-[300px] md:h-auto relative rounded-2xl sm:rounded-3xl overflow-hidden shrink-0 border-4 border-white shadow-xl bg-gradient-to-b from-accent/20 to-transparent flex items-center justify-center"
           >
             <Image 
               src="/avatar_new.png"
               alt="Yashwanth R"
               fill
               sizes="(max-width: 768px) 100vw, 320px"
-              className="object-cover object-top"
+              className="object-contain object-center"
             />
           </motion.div>
 
