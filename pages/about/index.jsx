@@ -61,7 +61,7 @@ const About = () => {
   const [index, setIndex] = useState(0);
 
   return (
-    <div className="h-full bg-primary/30 py-24 pb-32 md:py-32 text-center xl:text-left overflow-y-auto xl:overflow-hidden">
+    <div className="h-full bg-primary/30 py-20 text-center xl:text-left mobile-scroll-page">
       <Circles />
 
       {/* avatar img */}
@@ -75,7 +75,7 @@ const About = () => {
         <Avatar />
       </motion.div>
 
-      <div className="container mx-auto h-full flex flex-col items-center xl:flex-row gap-x-6">
+      <div className="container mx-auto h-full flex flex-col items-center xl:flex-row gap-x-6 px-4 sm:px-6">
         {/* text */}
         <div className="flex-1 flex flex-col justify-center">
           <motion.h2
@@ -91,7 +91,7 @@ const About = () => {
             variants={fadeIn("right", 0.4)}
             initial="hidden"
             animate="show"
-            className="max-w-[500px] mx-auto xl:mx-0 mb-6 xl:mb-12 px-2 xl:px-0"
+            className="max-w-[500px] mx-auto xl:mx-0 mb-6 xl:mb-12 px-2 xl:px-0 text-sm sm:text-base"
           >
             I have a product-first mindset, focusing on building systems that solve real problems. I am actively involved in robotics and student leadership, and I am always exploring new challenges. My work centers on turning hardware ideas into complete working systems using embedded C, ESP32, Arduino, and more.
           </motion.p>
@@ -103,9 +103,9 @@ const About = () => {
             animate="show"
             className="flex md:max-w-xl xl:max-w-none mx-auto xl:mx-0 mb-8"
           >
-            <div className="flex flex-wrap justify-center md:justify-start flex-1 gap-y-4 gap-x-4 xl:gap-x-6">
+            <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 sm:gap-6 w-full max-w-md sm:max-w-none mx-auto xl:mx-0">
               {/* cgpa */}
-              <div className="relative flex-1 after:w-[1px] after:h-full after:bg-black/10 after:absolute after:top-0 after:right-0">
+              <div className="relative flex flex-col items-center sm:items-start p-3 sm:p-0">
                 <div className="text-2xl xl:text-4xl font-extrabold text-accent mb-2">
                   <CountUp start={0} end={8} duration={5} />
                 </div>
@@ -115,7 +115,7 @@ const About = () => {
               </div>
 
               {/* projects */}
-              <div className="relative flex-1 after:w-[1px] after:h-full after:bg-black/10 after:absolute after:top-0 after:right-0">
+              <div className="relative flex flex-col items-center sm:items-start p-3 sm:p-0">
                 <div className="text-2xl xl:text-4xl font-extrabold text-accent mb-2">
                   <CountUp start={0} end={10} duration={5} />+
                 </div>
@@ -125,7 +125,7 @@ const About = () => {
               </div>
 
               {/* certifications */}
-              <div className="relative flex-1 after:w-[1px] after:h-full after:bg-black/10 after:absolute after:top-0 after:right-0">
+              <div className="relative flex flex-col items-center sm:items-start p-3 sm:p-0">
                 <div className="text-2xl xl:text-4xl font-extrabold text-accent mb-2">
                   <CountUp start={0} end={10} duration={5} />+
                 </div>
@@ -135,7 +135,7 @@ const About = () => {
               </div>
 
               {/* dedication */}
-              <div className="relative flex-1">
+              <div className="relative flex flex-col items-center sm:items-start p-3 sm:p-0">
                 <div className="text-2xl xl:text-4xl font-extrabold text-accent mb-2">
                   <CountUp start={0} end={100} duration={5} />%
                 </div>
@@ -162,7 +162,7 @@ const About = () => {
                 className={`${
                   index === itemI &&
                   "text-accent after:w-[100%] after:bg-accent after:transition-all after:duration-300"
-                } cursor-pointer capitalize xl:text-lg relative after:w-8 after:h-[2px] after:bg-ink/20 after:absolute after:-bottom-1 after:left-0`}
+                } cursor-pointer capitalize text-base sm:text-lg relative after:w-8 after:h-[2px] after:bg-ink/20 after:absolute after:-bottom-1 after:left-0 py-1`}
                 onClick={() => setIndex(itemI)}
               >
                 {item.title}
@@ -177,9 +177,9 @@ const About = () => {
                 className="flex-1 flex flex-col md:flex-row max-w-max gap-x-2 items-center text-center text-muted"
               >
                 {/* title */}
-                <div className="font-light mb-2 md:mb-0">{item.title}</div>
+                <div className="font-light mb-1 md:mb-0 text-sm sm:text-base">{item.title}</div>
                 <div className="hidden md:flex">-</div>
-                <div>{item.stage}</div>
+                <div className="text-sm sm:text-base">{item.stage}</div>
 
                 <div className="flex gap-x-4">
                   {/* icons */}

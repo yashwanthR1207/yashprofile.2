@@ -5,11 +5,13 @@ import Socials from "../components/Socials";
 
 const Header = () => {
   return (
-    <header className="absolute z-30 w-full items-center px-4 md:px-16 xl:px-0 xl:h-[90px]">
+    <header className="absolute z-30 w-full items-center px-4 sm:px-6 md:px-16 xl:px-0 xl:h-[90px]"
+      style={{ paddingTop: 'env(safe-area-inset-top, 0px)' }}
+    >
       <div className="container mx-auto">
-        <div className="flex flex-col lg:flex-row justify-between items-center gap-y-6 py-8">
+        <div className="flex flex-row justify-between items-center gap-y-4 py-4 sm:py-6 lg:py-8">
           <Link href="/">
-            <h1 className="text-3xl font-bold tracking-wider">
+            <h1 className="text-xl sm:text-2xl lg:text-3xl font-bold tracking-wider whitespace-nowrap">
               yashwanth <span className="text-accent">R.</span>
             </h1>
           </Link>

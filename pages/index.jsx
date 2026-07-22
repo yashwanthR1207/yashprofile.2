@@ -11,7 +11,7 @@ const Home = () => {
     <div className="bg-primary/60 h-full">
       {/* text */}
       <div className="w-full h-full">
-        <div className="text-center flex flex-col justify-center pt-24 pb-28 md:pt-32 md:pb-32 xl:pt-40 xl:pb-0 xl:text-left h-full container mx-auto xl:items-end">
+        <div className="text-center flex flex-col justify-center pt-20 pb-28 sm:pt-24 sm:pb-28 md:pt-32 md:pb-32 xl:pt-40 xl:pb-0 xl:text-left h-full container mx-auto xl:items-end px-4 sm:px-6">
           <div className="flex flex-col items-center xl:items-start relative z-20">
           {/* title */}
           <motion.h1
@@ -33,7 +33,7 @@ const Home = () => {
             initial="hidden"
             animate="show"
             exit="hidden"
-            className="max-w-sm xl:max-w-xl mx-auto xl:mx-0 mb-10 xl:mb-16"
+            className="max-w-[90%] sm:max-w-sm xl:max-w-xl mx-auto xl:mx-0 mb-8 sm:mb-10 xl:mb-16 text-sm sm:text-base"
           >
             Building embedded systems and smart IoT solutions with bold design and real-world impact. Currently pursuing my B.E. at VVCE, Mysuru.
           </motion.p>
@@ -55,7 +55,7 @@ const Home = () => {
         </div>
       </div>
       {/* image */}
-      <div className="w-[1280px] h-full absolute left-0 bottom-0 pointer-events-none">
+      <div className="w-full max-w-[1280px] h-full absolute left-0 bottom-0 pointer-events-none overflow-hidden">
         {/* bg img */}
         <div
           role="img"

@@ -40,14 +40,14 @@ const WorkSlider = () => {
         clickable: true,
       }}
       modules={[Pagination]}
-      className="h-[280px] sm:h-[480px]"
+      className="h-[240px] sm:h-[320px] md:h-[480px]"
     >
       {workSlides.slides.map((slide, i) => (
         <SwiperSlide key={i}>
           <div className="grid grid-cols-2 grid-rows-2 gap-4 h-full">
             {slide.images.map((image, imageI) => (
               <div
-                className="relative rounded-lg overflow-hidden flex items-center justify-center group h-[120px] sm:h-[200px] bg-black/5 border border-black/10 hover:border-accent/50 transition-all duration-300"
+                className="relative rounded-lg overflow-hidden flex items-center justify-center group h-[100px] sm:h-[140px] md:h-[200px] bg-black/5 border border-black/10 hover:border-accent/50 transition-all duration-300"
                 key={imageI}
               >
                 {/* overlay gradient */}

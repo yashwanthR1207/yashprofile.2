@@ -30,6 +30,13 @@ const Layout = ({ children }) => {
         />
         <meta name="author" content="Yashwanth" />
         <meta name="theme-color" content="#f13024" />
+        {/* Mobile Safari/Chrome compatibility */}
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5, viewport-fit=cover" />
+        {/* Prevent phone number auto-detection on Safari */}
+        <meta name="format-detection" content="telephone=no" />
+        {/* iOS web app capable */}
+        <meta name="apple-mobile-web-app-capable" content="yes" />
+        <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
       </Head>
 
       <TopLeftImg />

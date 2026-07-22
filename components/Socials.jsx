@@ -37,7 +37,7 @@ const Socials = () => {
           href={social.link}
           target="_blank"
           rel="noreferrer noopener"
-          className={`text-2xl ${social.color} hover:opacity-80 hover:scale-110 transition-all duration-300`}
+          className={`text-xl sm:text-2xl ${social.color} hover:opacity-80 hover:scale-110 transition-all duration-300`}
         >
           <social.Icon aria-hidden />
           <span className="sr-only">{social.name}</span>

@@ -7,9 +7,9 @@ import { fadeIn } from "../../variants";
 
 const Work = () => {
   return (
-    <div className="h-full bg-primary/30 pt-24 pb-32 md:py-36 flex items-center relative overflow-y-auto overflow-x-hidden xl:overflow-hidden">
+    <div className="h-full bg-primary/30 pt-20 flex items-center relative mobile-scroll-page">
       <Circles />
-      <div className="container mx-auto">
+      <div className="container mx-auto px-4 sm:px-6">
         <div className="flex flex-col xl:flex-row gap-x-8">
           {/* text */}
           <div className="text-center flex xl:w-[30vw] flex-col lg:text-left mb-4 xl:mb-0">
@@ -27,7 +27,7 @@ const Work = () => {
               initial="hidden"
               animate="show"
               exit="hidden"
-              className="mb-4 max-w-[400px] mx-auto lg:mx-0"
+              className="mb-4 max-w-[400px] mx-auto lg:mx-0 text-sm sm:text-base"
             >
               Innovating through practical hardware solutions and intelligent software design.
             </motion.p>

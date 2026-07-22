@@ -25,8 +25,10 @@ const Nav = () => {
   const pathname = usePathname();
 
   return (
-    <nav className="flex flex-col items-center xl:justify-center gap-y-4 fixed h-max bottom-0 mt-auto xl:right-[2%] z-50 top-auto xl:top-0 w-full xl:w-16 xl:max-w-md xl:h-screen">
-      <div className="flex w-full xl:flex-col items-center justify-between xl:justify-center gap-y-10 px-4 sm:px-10 md:px-40 xl:px-0 h-[80px] xl:h-max py-8 bg-black/5 backdrop-blur-md text-3xl xl:text-xl xl:rounded-full border border-black/5 shadow-sm">
+    <nav className="flex flex-col items-center xl:justify-center gap-y-4 fixed h-max bottom-0 mt-auto xl:right-[2%] z-50 top-auto xl:top-0 w-full xl:w-16 xl:max-w-md xl:h-screen"
+      style={{ paddingBottom: 'env(safe-area-inset-bottom, 0px)' }}
+    >
+      <div className="flex w-full xl:flex-col items-center justify-around sm:justify-between xl:justify-center gap-y-10 px-6 sm:px-10 md:px-40 xl:px-0 h-[72px] sm:h-[80px] xl:h-max py-8 bg-white/80 xl:bg-black/5 backdrop-blur-lg xl:backdrop-blur-md text-2xl sm:text-3xl xl:text-xl xl:rounded-full border-t border-black/10 xl:border xl:border-black/5 shadow-[0_-2px_10px_rgba(0,0,0,0.05)] xl:shadow-sm">
         {navData.map((link, i) => (
           <Link
             className={`${
