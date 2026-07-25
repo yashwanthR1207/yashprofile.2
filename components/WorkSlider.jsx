@@ -1,79 +1,81 @@
 import Link from "next/link";
-import { BsArrowRight } from "react-icons/bs";
-import { Pagination } from "swiper/modules";
-import { Swiper, SwiperSlide } from "swiper/react";
-
-import "swiper/css";
-import "swiper/css/free-mode";
-import "swiper/css/pagination";
-
-const workSlides = {
-  slides: [
-    {
-      images: [
-        {
-          title: "IoT Plant Detection",
-          link: "https://github.com/yashwanthR1207/AIOT-plant-detection-",
-        },
-        {
-          title: "Godown Automation",
-          link: "https://github.com/yashwanthR1207/IoT-Based-Intelligent-Godown-Automation-and-Safety-System",
-        },
-        {
-          title: "Robo Soccer",
-          link: "https://github.com/yashwanthR1207/Robo-soccer-Version-2",
-        },
-        {
-          title: "RC Car",
-          link: "https://github.com/yashwanthR1207/RC-car-version1",
-        },
-      ],
-    },
-  ],
-};
+import { BsGithub } from "react-icons/bs";
+import { useState, useEffect } from "react";
+import { motion } from "framer-motion";
 
 const WorkSlider = () => {
+  const [projects, setProjects] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchProjects = async () => {
+      try {
+        const res = await fetch("/api/projects");
+        const data = await res.json();
+        setProjects(data);
+      } catch (error) {
+        console.error("Failed to load projects", error);
+      }
+      setLoading(false);
+    };
+    fetchProjects();
+  }, []);
+
+  if (loading) {
+    return <div className="h-[280px] sm:h-[320px] md:h-[480px] flex items-center justify-center text-black/50">Loading projects...</div>;
+  }
+
+  if (projects.length === 0) {
+    return <div className="h-[280px] sm:h-[320px] md:h-[480px] flex items-center justify-center text-black/50">No projects found.</div>;
+  }
+
   return (
-    <Swiper
-      spaceBetween={10}
-      pagination={{
-        clickable: true,
-      }}
-      modules={[Pagination]}
-      className="h-[280px] sm:h-[320px] md:h-[480px]"
-    >
-      {workSlides.slides.map((slide, i) => (
-        <SwiperSlide key={i}>
-          <div className="grid grid-cols-2 grid-rows-2 gap-3 sm:gap-4 h-full">
-            {slide.images.map((image, imageI) => (
-              <Link
-                href={image.link}
-                target="_blank"
-                rel="noreferrer noopener"
-                className="relative rounded-lg overflow-hidden flex items-center justify-center group h-[120px] sm:h-[140px] md:h-[200px] bg-black/5 border border-black/10 hover:border-accent/50 active:border-accent/50 transition-all duration-300 cursor-pointer"
-                key={imageI}
-              >
-                {/* overlay gradient */}
-                <div
-                  className="absolute inset-0 bg-gradient-to-l from-transparent via-[#8b5cf6] to-[#4c1d95] opacity-0 group-hover:opacity-80 transition-all duration-700"
-                  aria-hidden
-                />
-
-                {/* Title */}
-                <h3 className="text-sm sm:text-xl md:text-2xl font-bold text-center z-10 group-hover:text-white transition-all duration-300 px-3 sm:px-4">
-                  {image.title}
+    <div className="flex flex-col h-full min-h-[400px]">
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6 flex-1 overflow-y-auto pr-2 scrollbar-thin scrollbar-thumb-[#9ca3af] scrollbar-track-transparent p-2">
+        {projects.map((project, i) => (
+          <motion.div
+            key={project.id}
+            initial={{ opacity: 0, scale: 0.9, y: 20 }}
+            animate={{ opacity: 1, scale: 1, y: 0 }}
+            transition={{ delay: i * 0.1, duration: 0.3 }}
+            className="relative group w-full h-[150px] sm:h-[180px] md:h-[220px] rounded-2xl cursor-pointer [perspective:1000px]"
+          >
+            {/* Card inner container */}
+            <div
+              className="w-full h-full relative transition-all duration-700 [transform-style:preserve-3d] group-hover:[transform:rotateY(180deg)] hover:-translate-y-2 rounded-2xl"
+            >
+              {/* Front State (iOS Smokey Glass) */}
+              <div className="absolute inset-0 w-full h-full [backface-visibility:hidden] rounded-2xl overflow-hidden flex items-center justify-center bg-slate-400/10 backdrop-blur-2xl border border-white/50 shadow-[inset_0_1px_1px_rgba(255,255,255,0.4)] p-6 glare-effect">
+                <h3 className="text-xl sm:text-2xl font-black font-sora text-black tracking-tighter text-center leading-tight">
+                  {project.title}
                 </h3>
+              </div>
 
-                {/* Arrow indicator */}
-                <div className="absolute bottom-2 right-3 sm:bottom-3 sm:right-4 z-10 text-accent/40 group-hover:text-white transition-all duration-300">
-                  <BsArrowRight className="text-base sm:text-lg" aria-hidden />
-                </div>
-              </Link>
-            ))}
-          </div>
-        </SwiperSlide>
-      ))}
-    </Swiper>
+              {/* Back State (iOS Smokey Glass Flip Effect) */}
+              <div className="absolute inset-0 w-full h-full [backface-visibility:hidden] [transform:rotateY(180deg)] rounded-2xl overflow-hidden flex flex-col items-center justify-center bg-slate-200/80 backdrop-blur-2xl border border-white/60 shadow-[inset_0_1px_1px_rgba(255,255,255,0.8)] p-4 glare-effect">
+                <h3 className="text-lg md:text-xl font-extrabold text-black mb-4 font-sora text-center">
+                  {project.title}
+                </h3>
+                <Link
+                  href={project.link}
+                  target="_blank"
+                  rel="noreferrer noopener"
+                  className="btn-glossy flex items-center justify-center gap-2 px-6 py-2.5 text-black font-bold text-sm transform hover:scale-105 active:scale-95 bg-white/50 border border-white/50 shadow-md"
+                >
+                  <BsGithub className="text-xl" />
+                  <span>View Project</span>
+                </Link>
+              </div>
+            </div>
+          </motion.div>
+        ))}
+      </div>
+      {projects.length > 2 && (
+        <p className="text-center text-sm font-medium text-slate-500 mt-3 animate-pulse">
+          Scroll down for more projects &darr;
+        </p>
+      )}
+    </div>
   );
 };
 

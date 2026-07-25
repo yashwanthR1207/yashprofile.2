@@ -1,64 +1,40 @@
 import { motion } from "framer-motion";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import CountUp from "react-countup";
 
 import Avatar from "../../components/Avatar";
 import Circles from "../../components/Circles";
 import { fadeIn } from "../../variants";
 
-//  data
-export const aboutData = [
-  {
-    title: "skills",
-    info: [
-      {
-        title: "Embedded & Hardware",
-        stage: "C/C++, Arduino, ESP32, Raspberry Pi",
-      },
-      {
-        title: "IoT Systems",
-        stage: "MQTT, HTTP, Cloud Basics",
-      },
-      {
-        title: "Programming",
-        stage: "Python, MATLAB",
-      },
-      {
-        title: "Execution",
-        stage: "Team Projects, Agile Prototyping",
-      },
-    ],
-  },
-  {
-    title: "projects",
-    info: [
-      {
-        title: "IoT Plant Detection",
-        stage: "ESP32, MQTT",
-      },
-      {
-        title: "Intelligent Godown Automation",
-        stage: "Sensors, Dashboard Tools",
-      },
-      {
-        title: "Robo Soccer & RC Car",
-        stage: "Arduino, Motors, Bluetooth",
-      },
-    ],
-  },
-  {
-    title: "credentials",
-    info: [
-      {
-        title: "B.E. Electrical & Electronics Engineering",
-        stage: "VVCE, Mysuru",
-      },
-    ],
-  },
-];
-
 const About = () => {
   const [index, setIndex] = useState(0);
+  const [aboutData, setAboutData] = useState({ stats: {}, skills: [], credentials: [] });
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchAboutData = async () => {
+      try {
+        const res = await fetch("/api/about");
+        if (res.ok) {
+          const data = await res.json();
+          setAboutData(data);
+        }
+      } catch (err) {
+        console.error("Failed to fetch about data", err);
+      }
+      setLoading(false);
+    };
+    fetchAboutData();
+  }, []);
+
+  const currentTabs = [
+    { title: "skills", info: aboutData.skills },
+    { title: "credentials", info: aboutData.credentials }
+  ];
+
+  if (loading) {
+    return <div className="h-full bg-primary/30 flex items-center justify-center text-black/50">Loading...</div>;
+  }
 
   return (
     <div className="h-full bg-primary/30 py-20 text-center xl:text-left mobile-scroll-page">
@@ -107,7 +83,7 @@ const About = () => {
               {/* cgpa */}
               <div className="relative flex flex-col items-center sm:items-start p-3 sm:p-0">
                 <div className="text-2xl xl:text-4xl font-extrabold text-accent mb-2">
-                  <CountUp start={0} end={8} duration={5} />
+                  <CountUp start={0} end={aboutData.stats.cgpa || 0} duration={5} />
                 </div>
                 <div className="text-xs uppercase tracking-[1px] leading-[1.4] max-w-[100px]">
                   CGPA
@@ -117,7 +93,7 @@ const About = () => {
               {/* projects */}
               <div className="relative flex flex-col items-center sm:items-start p-3 sm:p-0">
                 <div className="text-2xl xl:text-4xl font-extrabold text-accent mb-2">
-                  <CountUp start={0} end={10} duration={5} />+
+                  <CountUp start={0} end={aboutData.stats.projects || 0} duration={5} />+
                 </div>
                 <div className="text-xs uppercase tracking-[1px] leading-[1.4] max-w-[100px]">
                   Projects
@@ -127,7 +103,7 @@ const About = () => {
               {/* certifications */}
               <div className="relative flex flex-col items-center sm:items-start p-3 sm:p-0">
                 <div className="text-2xl xl:text-4xl font-extrabold text-accent mb-2">
-                  <CountUp start={0} end={10} duration={5} />+
+                  <CountUp start={0} end={aboutData.stats.certifications || 0} duration={5} />+
                 </div>
                 <div className="text-xs uppercase tracking-[1px] leading-[1.4] max-w-[100px]">
                   Certifications
@@ -137,7 +113,7 @@ const About = () => {
               {/* dedication */}
               <div className="relative flex flex-col items-center sm:items-start p-3 sm:p-0">
                 <div className="text-2xl xl:text-4xl font-extrabold text-accent mb-2">
-                  <CountUp start={0} end={100} duration={5} />%
+                  <CountUp start={0} end={aboutData.stats.dedication || 0} duration={5} />%
                 </div>
                 <div className="text-xs uppercase tracking-[1px] leading-[1.4] max-w-[100px]">
                   Dedication
@@ -155,14 +131,13 @@ const About = () => {
           exit="hidden"
           className="flex flex-col w-full xl:max-w-[48%] h-auto md:h-[480px]"
         >
-          <div className="flex flex-wrap justify-center xl:justify-start gap-x-4 gap-y-2 xl:gap-x-8 mx-auto xl:mx-0 mb-4">
-            {aboutData.map((item, itemI) => (
+          <div className="flex flex-wrap justify-center xl:justify-start gap-x-4 gap-y-3 xl:gap-x-6 mx-auto xl:mx-0 mb-6">
+            {currentTabs.map((item, itemI) => (
               <div
                 key={itemI}
-                className={`${
-                  index === itemI &&
-                  "text-accent after:w-[100%] after:bg-accent after:transition-all after:duration-300"
-                } cursor-pointer capitalize text-base sm:text-lg relative after:w-8 after:h-[2px] after:bg-ink/20 after:absolute after:-bottom-1 after:left-0 py-1`}
+                className={`tab-glossy cursor-pointer capitalize text-base sm:text-lg ${
+                  index === itemI ? "active font-bold" : "font-medium"
+                }`}
                 onClick={() => setIndex(itemI)}
               >
                 {item.title}
@@ -171,7 +146,7 @@ const About = () => {
           </div>
 
           <div className="py-2 xl:py-6 flex flex-col gap-y-2 xl:gap-y-4 items-center xl:items-start">
-            {aboutData[index].info.map((item, itemI) => (
+            {currentTabs[index].info.map((item, itemI) => (
               <div
                 key={itemI}
                 className="flex-1 flex flex-col md:flex-row max-w-max gap-x-2 items-center text-center text-muted"

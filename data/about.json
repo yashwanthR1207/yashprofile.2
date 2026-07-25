@@ -1,0 +1,37 @@
+{
+  "stats": {
+    "cgpa": 8,
+    "projects": 10,
+    "certifications": 10,
+    "dedication": 100
+  },
+  "skills": [
+    {
+      "id": "1",
+      "title": "Embedded & Hardware",
+      "stage": "C/C++, Arduino, ESP32, Raspberry Pi"
+    },
+    {
+      "id": "2",
+      "title": "IoT Systems",
+      "stage": "MQTT, HTTP, Cloud Basics"
+    },
+    {
+      "id": "3",
+      "title": "Programming",
+      "stage": "Python, MATLAB"
+    },
+    {
+      "id": "4",
+      "title": "Execution",
+      "stage": "Team Projects, Agile Prototyping"
+    }
+  ],
+  "credentials": [
+    {
+      "id": "1",
+      "title": "B.E. Electrical & Electronics Engineering",
+      "stage": "VVCE, Mysuru"
+    }
+  ]
+}

@@ -48,13 +48,17 @@ const ParticlesContainer = () => {
         },
         particles: {
           color: {
-            value: "#6b21a8",
+            value: "#d1d5db", // Light smokey gray for the bubble itself
+          },
+          stroke: {
+            width: 1,
+            color: "#9ca3af", // Slightly darker smokey gray for the edge (glass effect)
           },
           links: {
-            color: "#7c3aed",
+            color: "#9ca3af", // Smokey gray links
             distance: 150,
             enable: true,
-            opacity: 0.5,
+            opacity: 0.4,
             width: 1,
           },
           collisions: {
@@ -66,8 +70,8 @@ const ParticlesContainer = () => {
             outMode: {
               default: "bounce",
             },
-            random: false,
-            speed: 1,
+            random: true,
+            speed: 1.5, // Slightly faster for bubble-like floating
             straight: false,
           },
           number: {
@@ -75,18 +79,18 @@ const ParticlesContainer = () => {
               enable: true,
               area: 800,
             },
-            value: 80,
+            value: 60, // Slightly fewer particles for larger bubbles
           },
           opacity: {
-            value: 0.5,
+            value: 0.3, // Low opacity for glass-like transparency
           },
           shape: {
             type: "circle",
           },
           size: {
             value: {
-              min: 1,
-              max: 5,
+              min: 4,
+              max: 12, // Larger size to resemble bubbles
             },
           },
         },

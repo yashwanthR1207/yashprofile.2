@@ -38,10 +38,10 @@ const Home = () => {
             initial="hidden"
             animate="show"
             exit="hidden"
-            className="h1"
+            className="h1 font-black tracking-tighter text-center xl:text-left w-full"
           >
-            Hello, I&apos;m <br />{" "}
-            <span className="text-ink font-bold">
+            Hello, I&apos;m <br />
+            <span className="text-ink">
               Yashwanth <span className="text-accent">R</span>
             </span>
           </motion.h1>
@@ -52,7 +52,7 @@ const Home = () => {
             initial="hidden"
             animate="show"
             exit="hidden"
-            className="max-w-[90%] sm:max-w-sm xl:max-w-xl mx-auto xl:mx-0 mb-8 sm:mb-10 xl:mb-16 text-sm sm:text-base"
+            className="max-w-[90%] sm:max-w-md xl:max-w-xl mx-auto xl:mx-0 mb-8 sm:mb-10 xl:mb-16 text-base sm:text-lg text-muted font-medium leading-relaxed text-center xl:text-left"
           >
             Building embedded systems and smart IoT solutions with bold design and real-world impact. Currently pursuing my B.E. at VVCE, Mysuru.
           </motion.p>

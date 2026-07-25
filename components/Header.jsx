@@ -1,9 +1,12 @@
 import Image from "next/image";
 import Link from "next/link";
+import { useRouter } from "next/router";
 
 import Socials from "../components/Socials";
 
 const Header = () => {
+  const router = useRouter();
+  
   return (
     <header className="absolute z-30 w-full items-center px-4 sm:px-6 md:px-16 xl:px-0 xl:h-[90px]"
       style={{ paddingTop: 'env(safe-area-inset-top, 0px)' }}
@@ -16,8 +19,8 @@ const Header = () => {
             </h1>
           </Link>
 
-          {/* socials */}
-          <Socials />
+          {/* socials - hidden on work page to free up space */}
+          {router.pathname !== '/work' && <Socials />}
         </div>
       </div>
     </header>
