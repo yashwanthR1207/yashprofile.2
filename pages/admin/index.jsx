@@ -35,7 +35,7 @@ export default function Admin() {
   const fetchProjects = async () => {
     setLoading(true);
     try {
-      const res = await fetch('/api/projects');
+      const res = await fetch('/api/projects?t=' + Date.now());
       if (res.ok) setProjects(await res.json());
     } catch (err) {
       console.error(err);
@@ -45,7 +45,7 @@ export default function Admin() {
 
   const fetchAboutData = async () => {
     try {
-      const res = await fetch('/api/about');
+      const res = await fetch('/api/about?t=' + Date.now());
       if (res.ok) setAboutData(await res.json());
     } catch (err) {
       console.error(err);
