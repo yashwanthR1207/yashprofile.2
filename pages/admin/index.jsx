@@ -26,9 +26,19 @@ export default function Admin() {
   useEffect(() => {
     const token = sessionStorage.getItem('adminToken');
     if (token) {
-      setIsAuthenticated(true);
-      fetchProjects();
-      fetchAboutData();
+      fetch('/api/auth', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ password: token })
+      }).then(res => {
+        if (res.ok) {
+          setIsAuthenticated(true);
+          fetchProjects();
+          fetchAboutData();
+        } else {
+          sessionStorage.removeItem('adminToken');
+        }
+      }).catch(() => sessionStorage.removeItem('adminToken'));
     }
   }, []);
 
@@ -55,10 +65,25 @@ export default function Admin() {
   const handleLogin = async (e) => {
     e.preventDefault();
     setError('');
-    sessionStorage.setItem('adminToken', password);
-    setIsAuthenticated(true);
-    fetchProjects();
-    fetchAboutData();
+    
+    try {
+      const res = await fetch('/api/auth', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ password })
+      });
+      
+      if (res.ok) {
+        sessionStorage.setItem('adminToken', password);
+        setIsAuthenticated(true);
+        fetchProjects();
+        fetchAboutData();
+      } else {
+        setError('Invalid password.');
+      }
+    } catch (err) {
+      setError('An error occurred during login.');
+    }
   };
 
   const handleLogout = () => {
