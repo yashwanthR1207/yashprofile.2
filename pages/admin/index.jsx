@@ -113,7 +113,7 @@ export default function Admin() {
     e.preventDefault();
     const token = sessionStorage.getItem('adminToken');
     const method = editingProject ? 'PUT' : 'POST';
-    const body = editingProject ? { id: editingProject.id, ...formData } : formData;
+    const body = editingProject ? { id: String(editingProject.id), ...formData } : formData;
       
     try {
       const res = await fetch('/api/projects', {
@@ -121,10 +121,17 @@ export default function Admin() {
         headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` },
         body: JSON.stringify(body)
       });
-      if (res.status === 401) { handleLogout(); setError('Invalid password.'); return; }
-      if (res.ok) { closeModal(); fetchProjects(); }
+      if (res.status === 401) { handleLogout(); setError('Session expired. Please login again.'); return; }
+      if (res.ok) {
+        closeModal();
+        await fetchProjects();
+      } else {
+        const errData = await res.json().catch(() => ({}));
+        alert(`Failed to save project: ${errData.message || res.statusText}`);
+      }
     } catch (err) {
-      console.error(err);
+      console.error('Save project error:', err);
+      alert('Network error: Could not save project.');
     }
   };
 
@@ -135,12 +142,18 @@ export default function Admin() {
       const res = await fetch('/api/projects', {
         method: 'DELETE',
         headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` },
-        body: JSON.stringify({ id })
+        body: JSON.stringify({ id: String(id) })
       });
-      if (res.status === 401) { handleLogout(); return; }
-      if (res.ok) fetchProjects();
+      if (res.status === 401) { handleLogout(); setError('Session expired. Please login again.'); return; }
+      if (res.ok) {
+        await fetchProjects();
+      } else {
+        const errData = await res.json().catch(() => ({}));
+        alert(`Failed to delete project: ${errData.message || res.statusText}`);
+      }
     } catch (err) {
-      console.error(err);
+      console.error('Delete project error:', err);
+      alert('Network error: Could not delete project.');
     }
   };
 
@@ -153,10 +166,17 @@ export default function Admin() {
         headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` },
         body: JSON.stringify(aboutData)
       });
-      if (res.status === 401) { handleLogout(); return; }
-      if (res.ok) alert('About data saved successfully!');
+      if (res.status === 401) { handleLogout(); setError('Session expired. Please login again.'); return; }
+      if (res.ok) {
+        alert('About data saved successfully!');
+        await fetchAboutData();
+      } else {
+        const errData = await res.json().catch(() => ({}));
+        alert(`Failed to save about data: ${errData.message || res.statusText}`);
+      }
     } catch (err) {
-      console.error(err);
+      console.error('Save about data error:', err);
+      alert('Network error: Could not save about data.');
     }
   };
 
@@ -389,7 +409,7 @@ export default function Admin() {
               </div>
               <div>
                 <label className="block text-sm font-medium text-black/80 mb-2">GitHub URL</label>
-                <input type="url" value={formData.link} onChange={(e) => setFormData({ ...formData, link: e.target.value })} className="w-full bg-black/5 border border-black/20 rounded-lg p-3 text-black focus:border-accent outline-none" required />
+                <input type="text" value={formData.link} onChange={(e) => setFormData({ ...formData, link: e.target.value })} className="w-full bg-black/5 border border-black/20 rounded-lg p-3 text-black focus:border-accent outline-none" required />
               </div>
               <button type="submit" className="btn-glossy mt-4 font-bold py-3 text-black w-full text-center">
                 {editingProject ? 'Save Changes' : 'Create Project'}
