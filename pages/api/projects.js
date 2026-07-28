@@ -1,5 +1,4 @@
-import fs from 'fs';
-import path from 'path';
+import { readDataFile, writeDataFile } from '../../lib/github';
 
 // For demo purposes, we are using a simple hardcoded password.
 const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD || 'Janhavi@1207';
@@ -13,25 +12,7 @@ const parseBody = (req) => {
   return {};
 };
 
-export default function handler(req, res) {
-  const filePath = path.join(process.cwd(), 'data', 'projects.json');
-  
-  // Helper to read data
-  const getProjects = () => {
-    try {
-      const fileData = fs.readFileSync(filePath, 'utf8');
-      return JSON.parse(fileData);
-    } catch (error) {
-      console.error('Error reading projects.json:', error);
-      return [];
-    }
-  };
-
-  // Helper to write data
-  const saveProjects = (data) => {
-    fs.writeFileSync(filePath, JSON.stringify(data, null, 2), 'utf8');
-  };
-
+export default async function handler(req, res) {
   // Check authorization for modifying methods
   if (['POST', 'PUT', 'DELETE'].includes(req.method)) {
     const authHeader = req.headers.authorization;
@@ -42,12 +23,16 @@ export default function handler(req, res) {
 
   switch (req.method) {
     case 'GET': {
-      const projects = getProjects();
-      return res.status(200).json(projects);
+      try {
+        const projects = await readDataFile('projects.json');
+        return res.status(200).json(projects || []);
+      } catch (error) {
+        console.error('GET projects error:', error);
+        return res.status(500).json({ message: 'Failed to read projects.' });
+      }
     }
 
     case 'POST': {
-      // Add a new project
       try {
         const body = parseBody(req);
         const { title, link } = body;
@@ -55,7 +40,7 @@ export default function handler(req, res) {
           return res.status(400).json({ message: 'Title and Link are required.' });
         }
         
-        const currentProjects = getProjects();
+        const currentProjects = (await readDataFile('projects.json')) || [];
         const newProject = {
           id: Date.now().toString(),
           title,
@@ -63,65 +48,63 @@ export default function handler(req, res) {
         };
         
         currentProjects.push(newProject);
-        saveProjects(currentProjects);
+        await writeDataFile('projects.json', currentProjects, `Add project: ${title}`);
         
         return res.status(201).json(newProject);
       } catch (error) {
-        console.error('POST error:', error);
+        console.error('POST project error:', error);
         return res.status(500).json({ message: 'Failed to add project.' });
       }
     }
 
     case 'PUT': {
-      // Update an existing project
       try {
         const body = parseBody(req);
         const { id, title, link } = body;
         if (!id || !title || !link) {
-          return res.status(400).json({ message: 'ID, Title, and Link are required.', received: body });
+          return res.status(400).json({ message: 'ID, Title, and Link are required.' });
         }
         
-        const currentProjects = getProjects();
+        const currentProjects = (await readDataFile('projects.json')) || [];
         const idStr = String(id);
         const projectIndex = currentProjects.findIndex(p => String(p.id) === idStr);
         
         if (projectIndex === -1) {
-          return res.status(404).json({ message: 'Project not found.', searchId: idStr });
+          return res.status(404).json({ message: 'Project not found.' });
         }
         
         currentProjects[projectIndex] = { id: idStr, title, link };
-        saveProjects(currentProjects);
+        await writeDataFile('projects.json', currentProjects, `Update project: ${title}`);
         
         return res.status(200).json(currentProjects[projectIndex]);
       } catch (error) {
-        console.error('PUT error:', error);
+        console.error('PUT project error:', error);
         return res.status(500).json({ message: 'Failed to update project.' });
       }
     }
 
     case 'DELETE': {
-      // Delete a project
       try {
         const body = parseBody(req);
         const { id } = body;
         if (!id) {
-          return res.status(400).json({ message: 'Project ID is required.', received: body });
+          return res.status(400).json({ message: 'Project ID is required.' });
         }
         
-        let currentProjects = getProjects();
+        let currentProjects = (await readDataFile('projects.json')) || [];
         const idStr = String(id);
         const originalLength = currentProjects.length;
         currentProjects = currentProjects.filter(p => String(p.id) !== idStr);
         
         if (currentProjects.length === originalLength) {
-          return res.status(404).json({ message: 'Project not found.', searchId: idStr });
+          return res.status(404).json({ message: 'Project not found.' });
         }
         
-        saveProjects(currentProjects);
+        await writeDataFile('projects.json', currentProjects, `Delete project id: ${idStr}`);
         
         return res.status(200).json({ message: 'Project deleted successfully.' });
       } catch (error) {
-        console.error('DELETE error:', error);
+        console.error('DELETE project error:', error);
         return res.status(500).json({ message: 'Failed to delete project.' });
       }
     }

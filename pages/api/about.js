@@ -1,5 +1,4 @@
-import fs from 'fs';
-import path from 'path';
+import { readDataFile, writeDataFile } from '../../lib/github';
 
 const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD || 'Janhavi@1207';
 
@@ -12,23 +11,7 @@ const parseBody = (req) => {
   return {};
 };
 
-export default function handler(req, res) {
-  const filePath = path.join(process.cwd(), 'data', 'about.json');
-  
-  const getAboutData = () => {
-    try {
-      const fileData = fs.readFileSync(filePath, 'utf8');
-      return JSON.parse(fileData);
-    } catch (error) {
-      console.error('Error reading about.json:', error);
-      return { stats: {}, skills: [], credentials: [] };
-    }
-  };
-
-  const saveAboutData = (data) => {
-    fs.writeFileSync(filePath, JSON.stringify(data, null, 2), 'utf8');
-  };
-
+export default async function handler(req, res) {
   // Check authorization for modifying methods
   if (req.method === 'PUT') {
     const authHeader = req.headers.authorization;
@@ -39,8 +22,13 @@ export default function handler(req, res) {
 
   switch (req.method) {
     case 'GET': {
-      const data = getAboutData();
-      return res.status(200).json(data);
+      try {
+        const data = await readDataFile('about.json');
+        return res.status(200).json(data || { stats: {}, skills: [], credentials: [] });
+      } catch (error) {
+        console.error('GET about error:', error);
+        return res.status(500).json({ message: 'Failed to read about data.' });
+      }
     }
 
     case 'PUT': {
@@ -48,10 +36,10 @@ export default function handler(req, res) {
         const newData = parseBody(req);
         // Basic validation
         if (!newData || !newData.stats || !Array.isArray(newData.skills) || !Array.isArray(newData.credentials)) {
-          return res.status(400).json({ message: 'Invalid data format.', received: typeof newData });
+          return res.status(400).json({ message: 'Invalid data format.' });
         }
         
-        saveAboutData(newData);
+        await writeDataFile('about.json', newData, 'Update about page data via admin panel');
         return res.status(200).json(newData);
       } catch (error) {
         console.error('PUT about error:', error);
