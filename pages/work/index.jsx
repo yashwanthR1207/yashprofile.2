@@ -6,7 +6,7 @@ import { fadeIn } from "../../variants";
 
 const Work = () => {
   return (
-    <div className="h-full bg-primary/30 pt-24 sm:pt-32 pb-12 flex flex-col relative mobile-scroll-page overflow-hidden">
+    <div className="h-full w-full bg-primary/30 pt-24 sm:pt-32 pb-12 flex flex-col relative">
       <Circles />
       <div className="container mx-auto px-4 sm:px-6 flex-1 flex flex-col xl:flex-row gap-x-8 h-full">
         {/* text */}
