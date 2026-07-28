@@ -3,6 +3,26 @@ import { motion } from 'framer-motion';
 import { BsTrash, BsPencil, BsPlus, BsX } from 'react-icons/bs';
 
 export default function Admin() {
+  // Fix scrolling: override global overflow:hidden on body and .page
+  useEffect(() => {
+    document.body.style.overflow = 'auto';
+    document.body.style.height = 'auto';
+    const pageEl = document.querySelector('.page');
+    if (pageEl) {
+      pageEl.style.overflow = 'auto';
+      pageEl.style.height = 'auto';
+      pageEl.style.minHeight = '100vh';
+    }
+    return () => {
+      document.body.style.overflow = '';
+      document.body.style.height = '';
+      if (pageEl) {
+        pageEl.style.overflow = '';
+        pageEl.style.height = '';
+        pageEl.style.minHeight = '';
+      }
+    };
+  }, []);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
