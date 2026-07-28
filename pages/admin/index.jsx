@@ -3,26 +3,6 @@ import { motion } from 'framer-motion';
 import { BsTrash, BsPencil, BsPlus, BsX } from 'react-icons/bs';
 
 export default function Admin() {
-  // Fix scrolling: override global overflow:hidden on body and .page
-  useEffect(() => {
-    document.body.style.overflow = 'auto';
-    document.body.style.height = 'auto';
-    const pageEl = document.querySelector('.page');
-    if (pageEl) {
-      pageEl.style.overflow = 'auto';
-      pageEl.style.height = 'auto';
-      pageEl.style.minHeight = '100vh';
-    }
-    return () => {
-      document.body.style.overflow = '';
-      document.body.style.height = '';
-      if (pageEl) {
-        pageEl.style.overflow = '';
-        pageEl.style.height = '';
-        pageEl.style.minHeight = '';
-      }
-    };
-  }, []);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
@@ -42,6 +22,10 @@ export default function Admin() {
   const [aboutModalType, setAboutModalType] = useState('skills'); // 'skills' or 'credentials'
   const [editingAboutItem, setEditingAboutItem] = useState(null);
   const [aboutFormData, setAboutFormData] = useState({ title: '', stage: '' });
+  
+  // Saving states for buttons
+  const [isSavingProject, setIsSavingProject] = useState(false);
+  const [isSavingAbout, setIsSavingAbout] = useState(false);
 
   useEffect(() => {
     const token = sessionStorage.getItem('adminToken');
@@ -131,6 +115,7 @@ export default function Admin() {
 
   const handleSaveProject = async (e) => {
     e.preventDefault();
+    setIsSavingProject(true);
     const token = sessionStorage.getItem('adminToken');
     const method = editingProject ? 'PUT' : 'POST';
     const body = editingProject ? { id: String(editingProject.id), ...formData } : formData;
@@ -141,7 +126,7 @@ export default function Admin() {
         headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` },
         body: JSON.stringify(body)
       });
-      if (res.status === 401) { handleLogout(); setError('Session expired. Please login again.'); return; }
+      if (res.status === 401) { handleLogout(); setError('Session expired. Please login again.'); setIsSavingProject(false); return; }
       if (res.ok) {
         closeModal();
         await fetchProjects();
@@ -152,6 +137,8 @@ export default function Admin() {
     } catch (err) {
       console.error('Save project error:', err);
       alert('Network error: Could not save project.');
+    } finally {
+      setIsSavingProject(false);
     }
   };
 
@@ -178,17 +165,17 @@ export default function Admin() {
   };
 
   // --- ABOUT LOGIC ---
-  const handleSaveAboutData = async () => {
+  const handleSaveAboutData = async (dataToSave = aboutData) => {
+    setIsSavingAbout(true);
     const token = sessionStorage.getItem('adminToken');
     try {
       const res = await fetch('/api/about', {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` },
-        body: JSON.stringify(aboutData)
+        body: JSON.stringify(dataToSave)
       });
-      if (res.status === 401) { handleLogout(); setError('Session expired. Please login again.'); return; }
+      if (res.status === 401) { handleLogout(); setError('Session expired. Please login again.'); setIsSavingAbout(false); return; }
       if (res.ok) {
-        alert('About data saved successfully!');
         await fetchAboutData();
       } else {
         const errData = await res.json().catch(() => ({}));
@@ -197,11 +184,14 @@ export default function Admin() {
     } catch (err) {
       console.error('Save about data error:', err);
       alert('Network error: Could not save about data.');
+    } finally {
+      setIsSavingAbout(false);
     }
   };
 
   const updateStat = (key, value) => {
-    setAboutData({ ...aboutData, stats: { ...aboutData.stats, [key]: Number(value) } });
+    const newData = { ...aboutData, stats: { ...aboutData.stats, [key]: Number(value) } };
+    setAboutData(newData);
   };
 
   const openAboutModal = (type, item = null) => {
@@ -233,14 +223,18 @@ export default function Admin() {
       newItems.push({ id: Date.now().toString(), ...aboutFormData });
     }
     
-    setAboutData({ ...aboutData, [type]: newItems });
+    const newData = { ...aboutData, [type]: newItems };
+    setAboutData(newData);
+    handleSaveAboutData(newData); // auto save
     closeAboutModal();
   };
 
   const handleDeleteAboutItem = (type, id) => {
     if (!confirm('Delete this item?')) return;
     const newItems = aboutData[type].filter(i => i.id !== id);
-    setAboutData({ ...aboutData, [type]: newItems });
+    const newData = { ...aboutData, [type]: newItems };
+    setAboutData(newData);
+    handleSaveAboutData(newData); // auto save
   };
 
   if (!isAuthenticated) {
@@ -272,7 +266,7 @@ export default function Admin() {
   }
 
   return (
-    <div className="min-h-screen bg-primary/30 pt-24 pb-12 px-4 sm:px-6">
+    <div className="absolute inset-0 h-full w-full overflow-y-auto bg-primary/30 pt-24 pb-12 px-4 sm:px-6 z-10">
       <div className="container mx-auto max-w-5xl">
         <div className="flex flex-col sm:flex-row justify-between items-center mb-8 gap-4">
           <h1 className="text-3xl md:text-5xl font-bold text-black">Admin <span className="text-accent">Panel.</span></h1>
@@ -346,8 +340,12 @@ export default function Admin() {
           <div className="bg-black/5 backdrop-blur-sm border border-black/10 rounded-2xl p-6">
             <div className="flex justify-between items-center mb-6">
               <h2 className="text-xl font-semibold text-black">About Page Stats & Data</h2>
-              <button onClick={handleSaveAboutData} className="btn-glossy px-4 py-2 text-black font-semibold">
-                Save All About Data
+              <button 
+                onClick={() => handleSaveAboutData(aboutData)} 
+                disabled={isSavingAbout}
+                className="btn-glossy px-4 py-2 text-black font-semibold disabled:opacity-50"
+              >
+                {isSavingAbout ? 'Saving...' : 'Save Changes'}
               </button>
             </div>
             
@@ -431,8 +429,8 @@ export default function Admin() {
                 <label className="block text-sm font-medium text-black/80 mb-2">GitHub URL</label>
                 <input type="text" value={formData.link} onChange={(e) => setFormData({ ...formData, link: e.target.value })} className="w-full bg-black/5 border border-black/20 rounded-lg p-3 text-black focus:border-accent outline-none" required />
               </div>
-              <button type="submit" className="btn-glossy mt-4 font-bold py-3 text-black w-full text-center">
-                {editingProject ? 'Save Changes' : 'Create Project'}
+              <button type="submit" disabled={isSavingProject} className="btn-glossy mt-4 font-bold py-3 text-black w-full text-center disabled:opacity-50">
+                {isSavingProject ? 'Saving...' : (editingProject ? 'Save Changes' : 'Create Project')}
               </button>
             </form>
           </motion.div>
@@ -454,8 +452,8 @@ export default function Admin() {
                 <label className="block text-sm font-medium text-black/80 mb-2">Description / Stage</label>
                 <input type="text" value={aboutFormData.stage} onChange={(e) => setAboutFormData({ ...aboutFormData, stage: e.target.value })} className="w-full bg-black/5 border border-black/20 rounded-lg p-3 text-black focus:border-accent outline-none" required placeholder="e.g. C/C++, Arduino" />
               </div>
-              <button type="submit" className="btn-glossy mt-4 font-bold py-3 text-black w-full text-center">
-                {editingAboutItem ? 'Save Changes' : 'Add Item'}
+              <button type="submit" disabled={isSavingAbout} className="btn-glossy mt-4 font-bold py-3 text-black w-full text-center disabled:opacity-50">
+                {isSavingAbout ? 'Saving...' : (editingAboutItem ? 'Save Changes' : 'Add Item')}
               </button>
             </form>
           </motion.div>
